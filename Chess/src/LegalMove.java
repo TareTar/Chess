@@ -1,15 +1,13 @@
-import java.util.ArrayList;
-
 public class LegalMove
 {
-    public ArrayList<int[]> LegalMoveList;
-    public int row;
-    public int column;
+    public boolean isLegal;
+    public boolean castle;
+    public boolean enPassant;
 
-    LegalMove(Piece[][] pieces, int row, int column)
+    public LegalMove(boolean isLegal, boolean castle, boolean enPassant)
     {  
-        this.row = row;
-        this.column = column;
-        LegalMoveList = new ArrayList<int[]>();
+        this.isLegal = isLegal;
+        this.castle = castle;
+        this.enPassant = enPassant;
     }
 }

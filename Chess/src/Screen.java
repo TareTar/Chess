@@ -10,10 +10,6 @@ import java.awt.Image;
 
 public class Screen extends Main
 {
-    private JFrame frame;
-    private JPanel[][] panels;
-    private JLabel[][] labels;
-
     public Screen()
     {
         frame = new JFrame();
@@ -64,14 +60,14 @@ public class Screen extends Main
         {
             for (int j = 0; j < 8; j++)
             {   
-                updateScreen(position.pieces[i][j], i, j);
+                updateScreen(labels, position.pieces[i][j], i, j);
             }
         }
     }
 
-    public void updateScreen(Piece piece, int row, int column)
+    public static void updateScreen(JLabel[][] labels, Piece piece, int row, int column)
     {
-        if (piece.toString().equals("emptyEmpty"))
+        if (piece.type.equals("empty"))
         {
             labels[row][column].setIcon(null);
             return;
@@ -85,61 +81,7 @@ public class Screen extends Main
         labels[row][column].setIcon(imageIcon);
     }        
 
-    private Position currentPosition;
-    private String turn;
-    private Piece selectedPiece;
-    private Piece previousPiece;
-    private int previousRow;
-    private int previousColumn;
-    private boolean click = false;
-
-    public void performAction(int row, int column)
-    {
-        currentPosition = positions.get(positions.size() - 1);
-        turn = currentPosition.turn;
-
-        selectedPiece = currentPosition.pieces[row][column];
-
-        if (click)
-        {
-            highlightSquare(previousRow, previousColumn, false);
-
-            Piece[][] pieces = new Piece[8][8];
-            for (int i = 0; i < 8; i++)
-            {
-                for (int j = 0; j < 8; j++)
-                {
-                    pieces[i][j] = new Piece(currentPosition.pieces[i][j]);
-                }
-            }
-
-            pieces[previousRow][previousColumn] = new Piece();
-            pieces[row][column] = previousPiece;
-
-            updateScreen(pieces[row][column], row, column);
-            updateScreen(pieces[previousRow][previousColumn], previousRow, previousColumn);
-
-            turn = turn == "white" ? "black" : "white";
-
-            positions.add(new Position(pieces, turn));
-        }
-        else
-        {
-            if (selectedPiece.toString().equals("emptyEmpty") || !selectedPiece.color.equals(turn))
-            {
-                return;
-            }
-
-            highlightSquare(row, column, true);
-        }
-
-        previousPiece = new Piece(selectedPiece);
-        previousRow = row;
-        previousColumn = column;
-        click = !click;
-    }
-
-    public void highlightSquare(int row, int column, boolean highlight)
+    public static void highlightSquare(JPanel[][] panels, int row, int column, boolean highlight)
     {
         panels[row][column].setBackground(highlight ? Color.orange : row % 2 == 0 && column % 2 == 0 || row % 2 == 1 && column % 2 == 1 ? Color.white : new Color(118,150,86));
     }

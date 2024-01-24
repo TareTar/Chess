@@ -1,17 +1,26 @@
-public class Piece {
+public class Piece
+{
     public String color;
     public String type;
+    public boolean hasMoved;
+    public boolean hasCastled;
+    public LegalMove[][] legalMoves;
     
     public Piece(String color, String type)
     {
         this.color = color;
         this.type = type;
+        hasMoved = false;
+        hasCastled = false;
     }
 
     public Piece(Piece piece)
     {
-        this.color = piece.color;
-        this.type = piece.type;
+        color = piece.color;
+        type = piece.type;
+        hasMoved = piece.hasMoved;
+        hasCastled = piece.hasCastled;
+        legalMoves = piece.legalMoves;
     }
 
     public Piece()
